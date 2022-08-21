@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+if [[ `git diff @ --name-only | grep -E "^src/"` != "" ]]; then
+  npm run lint:check -- --max-warnings 0
+  tsc --noEmit
+fi
