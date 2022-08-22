@@ -1,4 +1,4 @@
-# GraphQL backend test tast
+# GraphQL backend test task
 
 Visit: <http://157.90.248.157:4000> to see the result.
 
