@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLList, GraphQLObjectType } from 'graphql';
+import { GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString } from 'graphql';
 import { graphql } from 'controllers';
 
 import * as commits from './commits';
@@ -8,6 +8,13 @@ export const RootQuery = new GraphQLObjectType({
   name: 'QuerySchema',
   description: 'Root query schema.',
   fields: {
+    hello: {
+      type: GraphQLString,
+      description: 'Hello world query.',
+      resolve() {
+        return 'world';
+      },
+    },
     commits: {
       type: new GraphQLList(commits.QueryType),
       description: 'GitHub repo commits.',
