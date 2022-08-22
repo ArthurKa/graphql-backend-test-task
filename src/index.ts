@@ -1,7 +1,9 @@
-import { github } from 'services';
+import { app } from 'app';
+import { tokenModel } from 'models';
 
 (async () => {
-  const commits = await github.fetchCommits(2);
-  console.info(commits.length);
-  console.info(commits[0]);
+  await tokenModel.prepare();
+
+  const { PORT } = process.env;
+  app.listen(PORT, () => console.info(`GraphQL API server running at localhost:${PORT}`));
 })();

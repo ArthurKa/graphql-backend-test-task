@@ -5,3 +5,8 @@ export interface TokenPayload {
 export interface Token extends TokenPayload {
   id: number;
 }
+
+export interface FetchCommitParams {
+  page: number;
+  perPage: number;
+}
