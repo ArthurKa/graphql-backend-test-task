@@ -2,7 +2,7 @@
 
 Visit: <http://157.90.248.157:4000> to see the result.
 
-**Note: to use full functionality provide `Authorization` header with generated API token**
+**Note: to use full functionality provide `Authorization` header with generated API token.**
 
 ## To run project locally
 
