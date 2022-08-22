@@ -52,9 +52,7 @@ export const RootMutation = new GraphQLObjectType({
     generateNewApiToken: {
       type: tokens.QueryType,
       description: 'Generate new API token.',
-      resolve() {
-        return graphql.tokens.create();
-      },
+      resolve: graphql.tokens.create,
     },
   },
 });
