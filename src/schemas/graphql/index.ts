@@ -1,5 +1,6 @@
 import { GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLString } from 'graphql';
 import { graphql } from 'controllers';
+import { withTokenAuth } from 'middlewares/auth';
 
 import * as commits from './commits';
 import * as tokens from './tokens';
@@ -15,30 +16,32 @@ export const RootQuery = new GraphQLObjectType({
         return 'world';
       },
     },
-    commits: {
-      type: new GraphQLList(commits.QueryType),
-      description: 'GitHub repo commits.',
-      args: {
-        page: {
-          type: GraphQLInt,
-          defaultValue: 1,
-          description: 'Page number.',
+    ...withTokenAuth({
+      commits: {
+        type: new GraphQLList(commits.QueryType),
+        description: 'GitHub repo commits.',
+        args: {
+          page: {
+            type: GraphQLInt,
+            defaultValue: 1,
+            description: 'Page number.',
+          },
+          perPage: {
+            type: GraphQLInt,
+            defaultValue: 30,
+            description: 'Items per page in range [1; 100].',
+          },
         },
-        perPage: {
-          type: GraphQLInt,
-          defaultValue: 30,
-          description: 'Items per page in range [1; 100].',
+        resolve(_, params: Parameters<typeof graphql.commits.get>[0]): ReturnType<typeof graphql.commits.get> {
+          return graphql.commits.get(params);
         },
       },
-      resolve(_, params: Parameters<typeof graphql.commits.get>[0]): ReturnType<typeof graphql.commits.get> {
-        return graphql.commits.get(params);
+      tokens: {
+        type: new GraphQLList(tokens.QueryType),
+        description: 'Generated API tokens.',
+        resolve: graphql.tokens.find,
       },
-    },
-    tokens: {
-      type: new GraphQLList(tokens.QueryType),
-      description: 'Generated API tokens.',
-      resolve: graphql.tokens.find,
-    },
+    }),
   },
 });
 
